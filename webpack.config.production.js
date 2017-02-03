@@ -10,6 +10,7 @@ import merge from 'webpack-merge';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import BabiliPlugin from 'babili-webpack-plugin';
 import baseConfig from './webpack.config.base';
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 export default validate(merge(baseConfig, {
   devtool: 'cheap-module-source-map',
@@ -62,7 +63,11 @@ export default validate(merge(baseConfig, {
      * Reduces total file size and is recommended
      */
     new webpack.optimize.OccurrenceOrderPlugin(),
-
+     new CopyWebpackPlugin([
+       {
+         from : path.resolve(__dirname,'./app/splash.html')
+       }
+     ]),
     /**
      * Create global constants which can be configured at compile time.
      *
@@ -93,7 +98,8 @@ export default validate(merge(baseConfig, {
       filename: '../app.html',
       template: 'app/app.html',
       inject: false
-    })
+    }),
+
   ],
 
   // https://github.com/chentsulin/webpack-target-electron-renderer#how-this-module-works

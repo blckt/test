@@ -3,10 +3,20 @@ import { app, BrowserWindow, Menu, shell } from 'electron';
 let menu;
 let template;
 let mainWindow = null;
+let splashWindow = null;
 
+let mainWindowOptions = {
+  show: false,
+  width: 1024,
+  height: 728,
+}
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support'); // eslint-disable-line
   sourceMapSupport.install();
+  mainWindowOptions = Object.assign({}, mainWindowOptions, {
+    thickFrame: true,
+    frame: false,
+  })
 }
 
 if (process.env.NODE_ENV === 'development') {
@@ -14,6 +24,7 @@ if (process.env.NODE_ENV === 'development') {
   const path = require('path'); // eslint-disable-line
   const p = path.join(__dirname, '..', 'app', 'node_modules'); // eslint-disable-line
   require('module').globalPaths.push(p); // eslint-disable-line
+
 }
 
 app.on('window-all-closed', () => {
@@ -43,17 +54,23 @@ const installExtensions = async () => {
 
 app.on('ready', async () => {
   await installExtensions();
-
-  mainWindow = new BrowserWindow({
-    show: false,
-    width: 1024,
-    height: 728
+  splashWindow = new BrowserWindow({
+    height: 300,
+    thickFrame: true,
+    frame: false,
+    alwaysOnTop: true,
+    width: 300,
+    transparent: true,
+    webPreferences: { devTools: false }
   });
+  mainWindow = new BrowserWindow(mainWindowOptions);
 
+  splashWindow.show();
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
   mainWindow.webContents.on('did-finish-load', () => {
     mainWindow.show();
+    splashWindow.hide();
     mainWindow.focus();
   });
 

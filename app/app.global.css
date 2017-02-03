@@ -1,5 +1,8 @@
 @import "~font-awesome/css/font-awesome.css";
-
+@font-face {
+  font-family: Roboto; /* Имя шрифта */
+  src: url(assets/Roboto-Regular.ttf); /* Путь к файлу со шрифтом */
+ }
 body {
   position: relative;
   color: white;
@@ -8,32 +11,4 @@ body {
   background-image: linear-gradient(45deg, rgba(0, 216, 255, .5) 10%, rgba(0, 1, 127, .7));
   font-family: Arial, Helvetica, Helvetica Neue, serif;
   overflow-y: hidden;
-}
-
-h2 {
-  margin: 0;
-  font-size: 2.25rem;
-  font-weight: bold;
-  letter-spacing: -.025em;
-  color: #fff;
-}
-
-p {
-  font-size: 24px;
-}
-
-li {
-  list-style: none;
-}
-
-a {
-  color: white;
-  opacity: .75;
-  text-decoration: none;
-}
-
-a:hover {
-  opacity: 1;
-  text-decoration: none;
-  cursor: pointer;
 }
