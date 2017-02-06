@@ -6,7 +6,7 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import Toggle from 'material-ui/Toggle';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import ExitIcon from 'material-ui/svg-icons/action/exit-to-app';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 
 const {app} = require('electron').remote
@@ -14,16 +14,14 @@ const {app} = require('electron').remote
 
 
 const Settings = (props) => (
-  <IconMenu {...props} iconButtonElement={< IconButton > <MoreVertIcon /> </IconButton>} targetOrigin={{
+  <IconMenu {...props} iconButtonElement={< IconButton > <ExitIcon /> </IconButton>} targetOrigin={{
     horizontal: 'right',
     vertical: 'top'
   }} anchorOrigin={{
     horizontal: 'right',
     vertical: 'top'
   }}>
-    <MenuItem primaryText="Refresh" />
-    <MenuItem primaryText="Help" />
-    <MenuItem primaryText="Exit" onClick={props.handleExit} />
+    <MenuItem primaryText="Exit" leftIcon={<NavigationClose/>} onClick={props.handleExit} />
   </IconMenu>
 );
 
@@ -31,12 +29,6 @@ export class Header extends Component {
   constructor(props) {
     super(props);
   }
-  state = {
-    yo: 1
-  }
-  handleChange = (event, logged) => {
-    this.setState({ logged: logged });
-  };
   handleExit = () => {
      var x = confirm("Are you sure?")
      if(x){
@@ -45,7 +37,7 @@ export class Header extends Component {
   }
   render() {
     return (
-      <AppBar title="Title" showMenuIconButton={false} iconElementRight={<Settings handleExit={
+      <AppBar style={{minHeight:'64px'}} title={this.props.title|| "App title not provided"} showMenuIconButton={false} iconElementRight={<Settings handleExit={
         this.handleExit
       } />} />
     );

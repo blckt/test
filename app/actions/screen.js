@@ -1,5 +1,7 @@
-// @flow
-import { desktopCapturer } from 'electron'
+import {desktopCapturer} from 'electron'
+
+import {push} from 'react-router-redux';
+
 
 /**
 * consts
@@ -13,22 +15,25 @@ export const STOP_CAPTURING = 'STOP_CAPTURING'
 export const GETTINGS_SCREENS = 'GETTINGS_SCREENS '
 export const GET_CURRENT_SCREEN = 'GET_CURRENT_SCREEN'
 
-export type screen = {
-  id: string,
-  thumbnail: any,
-  name: string
+
+
+
+export function startCapture(stream){
+
 }
 
-
-export function setCurrentScreen(scr: screen) {
-  return ({
+export function setCurrentScreen(scr) {
+  return dispatch=>{
+    dispatch({
     type: SET_CURRENT_SCREEN,
     payload: { scr }
   })
+    dispatch(push('/screen'))
+  }
 }
 
 
-export function setAllScreens(screens: Array<screen>) {
+export function setAllScreens(screens) {
   return ({
     type: SET_ALL_SCREENS,
     payload: {
@@ -45,7 +50,7 @@ export function removeCurrentScreen() {
 }
 
 
-export function geetingScreens(isGetting: boolean) {
+export function geetingScreens(isGetting) {
   return ({
     type: GETTINGS_SCREENS,
     payload: {
@@ -55,9 +60,11 @@ export function geetingScreens(isGetting: boolean) {
 }
 
 export function getAllScreens() {
-  return (dispatch: () => void) => {
-    desktopCapturer.getSources({ types: ['window', 'screen'] }, (err: Error, sources: Array<screen>) => {
-      if (err) {
+
+  return dispatch => {
+
+    desktopCapturer.getSources({ types: ['window', 'screen'] },(err,sources) => {
+       if (err) {
         dispatch({
           type: 'ERROR',
           payload: { err }
@@ -67,3 +74,4 @@ export function getAllScreens() {
     })
   }
 }
+

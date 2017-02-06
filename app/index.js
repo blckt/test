@@ -12,7 +12,7 @@ injectTapEventPlugin();
 import 'normalize.css'
 import './app.global.css';
 
-const store = configureStore();
+export const store = configureStore();
 const history = syncHistoryWithStore(hashHistory, store);
 
 render(

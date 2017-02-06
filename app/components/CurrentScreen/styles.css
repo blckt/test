@@ -1,0 +1,18 @@
+.video-box  {
+    height:100%;
+    max-height:768px;
+    box-shadow: 0px 0px 10px blueviolet;
+
+}
+
+.video-container {
+  display: flex;
+  justify-content: center;
+  margin: 5px;
+}
+
+.page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
