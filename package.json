@@ -54,7 +54,8 @@
       "splash.html",
       "main.js",
       "main.js.map",
-      "package.json"
+      "package.json",
+      "app/binaries/"
     ],
     "win": {
       "target": "nsis"
@@ -165,6 +166,7 @@
     "antd": "^2.6.4",
     "copy-webpack-plugin": "^4.0.1",
     "electron-debug": "^1.1.0",
+    "ffbinaries": "^0.1.6",
     "font-awesome": "^4.7.0",
     "immutable": "^3.8.1",
     "material-ui": "latest",

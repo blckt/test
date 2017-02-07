@@ -5,7 +5,6 @@ const mediaRecorder = Symbol();
 export default class {
   constructor(stream, recorderOptions, events) {
     this.stream = stream;
-    this.chunks = [];
     this.defaultOptions = {
       onData: () => { },
       onStart: () => { },
@@ -55,10 +54,6 @@ export default class {
 
   }
   onData = (e) => {
-    if (e.data && e.data.size > 0) {
-      this.chunks.push(e.data);
-    }
-    console.log(e.data);
     this.defaultOptions.onData(e);
   }
 

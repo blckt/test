@@ -48,6 +48,9 @@ export function startVideoCapture() {
   const {screen: {mediaRecorder}} = store.getState();
   if (mediaRecorder) {
     mediaRecorder.startCapture();
+    let notification = new Notification('Title', {
+      body: 'Started'
+    })
     return {
       type: VIDEO_CAPTURE_STATE_CHANGE,
       payload: {
