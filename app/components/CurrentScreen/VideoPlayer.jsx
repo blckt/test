@@ -29,22 +29,21 @@ export default class Player extends Component {
     }
   }
   addVideoSrc = (stream) => {
-    if (stream) {
+    if (stream && !this.state.src) {
       const url = URL.createObjectURL(stream)
-
       this.setState({
         src: url
       })
-    this.setRef(this.state.src);
+      this.setRef(this.state.src);
     }
   }
 
   render() {
 
-      if(this.state.src){
-        return <video className={styles['video-box']} src={this.state.src} autoPlay ref="video" muted></video>
-      } else {
-        return  <div>Loading...</div>
-      }
+    if (this.state.src) {
+      return <video className={styles['video-box']} src={this.state.src} autoPlay ref="video" muted></video>
+    } else {
+      return <div>Loading...</div>
+    }
   }
 }

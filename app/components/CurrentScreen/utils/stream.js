@@ -6,7 +6,6 @@ export function initPreview(options){
     const gotError=(err)=>{
       reject(err);
     }
-
     navigator.webkitGetUserMedia(options,gotStream,gotError)
   })
 }

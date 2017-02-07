@@ -72,6 +72,7 @@ class AllScreens extends Component {
     try {
       stream = await initPreview(videoCaptureOptions(id))
       this.setState({ stream });
+      this.props.installVideoRecorder(this.state.stream);
     }
     catch (e) {
       console.log(e);
@@ -86,7 +87,8 @@ class AllScreens extends Component {
           <VideoPlayer src={this.state.stream} />
         </CardMedia>
         <CardActions>
-          <FlatButton label="Capture" />
+          <FlatButton label="Capture" onClick={() => { this.props.startVideoCapture() }} />
+          <FlatButton label="StopVideoCapture" onClick={() => { this.props.stopVideoCapturing() }} />
         </CardActions>
       </Card>
     );

@@ -14,14 +14,14 @@ const {app} = require('electron').remote
 
 
 const Settings = (props) => (
-  <IconMenu {...props} iconButtonElement={< IconButton > <ExitIcon /> </IconButton>} targetOrigin={{
+  <IconMenu {...props} iconButtonElement={<IconButton> <ExitIcon /> </IconButton>} targetOrigin={{
     horizontal: 'right',
     vertical: 'top'
   }} anchorOrigin={{
     horizontal: 'right',
     vertical: 'top'
   }}>
-    <MenuItem primaryText="Exit" leftIcon={<NavigationClose/>} onClick={props.handleExit} />
+    <MenuItem primaryText="Exit" leftIcon={<NavigationClose />} onClick={props.handleExit} />
   </IconMenu>
 );
 
@@ -30,14 +30,14 @@ export class Header extends Component {
     super(props);
   }
   handleExit = () => {
-     var x = confirm("Are you sure?")
-     if(x){
-       app.exit();
-     }
+    var x = confirm("Are you sure?")
+    if (x) {
+      app.exit();
+    }
   }
   render() {
     return (
-      <AppBar style={{minHeight:'64px'}} title={this.props.title|| "App title not provided"} showMenuIconButton={false} iconElementRight={<Settings handleExit={
+      <AppBar style={{ minHeight: '64px' }} title={this.props.title || "App title not provided"} showMenuIconButton={false} iconElementRight={<Settings handleExit={
         this.handleExit
       } />} />
     );
