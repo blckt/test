@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
@@ -9,45 +9,51 @@ import Toggle from 'material-ui/Toggle';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 
-const {app} = require('electron').remote
-
+const { app } = require('electron').remote;
 
 
 const Settings = (props) => (
-  <IconMenu {...props} iconButtonElement={< IconButton > <MoreVertIcon /> </IconButton>} targetOrigin={{
-    horizontal: 'right',
-    vertical: 'top'
-  }} anchorOrigin={{
-    horizontal: 'right',
-    vertical: 'top'
-  }}>
+  <IconMenu
+    {...props} iconButtonElement={<IconButton > <MoreVertIcon /> </IconButton>} targetOrigin={{
+      horizontal: 'right',
+      vertical: 'top'
+    }} anchorOrigin={{
+      horizontal: 'right',
+      vertical: 'top'
+    }}
+  >
     <MenuItem primaryText="Refresh" />
     <MenuItem primaryText="Help" />
     <MenuItem primaryText="Exit" onClick={props.handleExit} />
   </IconMenu>
 );
 
+Settings.propTypes = {
+  handleExit: PropTypes.func.isRequired
+};
+
 export class Header extends Component {
-  constructor(props) {
-    super(props);
-  }
   state = {
     yo: 1
   }
   handleChange = (event, logged) => {
-    this.setState({ logged: logged });
+    this.setState({ logged });
   };
   handleExit = () => {
-     var x = confirm("Are you sure?")
-     if(x){
-       app.exit();
-     }
+    const x = confirm('Are you sure?');
+    if (x) {
+      app.exit();
+    }
   }
   render() {
     return (
-      <AppBar title="Title" showMenuIconButton={false} iconElementRight={<Settings handleExit={
-        this.handleExit
-      } />} />
+      <AppBar
+        title="Capture!" showMenuIconButton={false} iconElementRight={<Settings
+          handleExit={
+            this.handleExit
+          }
+        />}
+      />
     );
   }
 }

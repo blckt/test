@@ -1,7 +1,8 @@
 // @flow
 import React, { Component } from 'react';
-import {Header} from '../components/Header'
-console.log(Header)
+import { Header } from '../components/Header';
+
+console.log(Header);
 export default class App extends Component {
   props: {
     children: HTMLElement
