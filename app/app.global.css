@@ -1,7 +1,7 @@
 @import "~font-awesome/css/font-awesome.css";
 @font-face {
-  font-family: Roboto; /* Имя шрифта */
-  src: url(assets/Roboto-Regular.ttf); /* Путь к файлу со шрифтом */
+  font-family: Roboto;
+  src: url(assets/Roboto-Regular.ttf);
  }
 body {
   position: relative;
@@ -11,4 +11,16 @@ body {
   background-image: linear-gradient(rgba(255, 255, 255, .5) 10%, rgba(32, 32, 32, .7));
   font-family: Arial, Helvetica, Helvetica Neue, serif;
   overflow-y: hidden;
+}
+
+.scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+  background: lightgrey;
+}
+
+.scroll::-webkit-scrollbar {
+  width: 5px;
 }

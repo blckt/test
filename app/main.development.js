@@ -1,5 +1,7 @@
 import { app, BrowserWindow, Menu, shell } from 'electron';
 
+import './ffmpegDownload';
+
 let menu;
 let template;
 let mainWindow = null;
@@ -64,7 +66,7 @@ app.on('ready', async () => {
     webPreferences: { devTools: false }
   });
   mainWindow = new BrowserWindow(mainWindowOptions);
-
+  splashWindow.loadURL(`file://${__dirname}/splash.html`);
   splashWindow.show();
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
