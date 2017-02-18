@@ -1,17 +1,14 @@
 export function throwError(err) {
-  if (err instanceof Error) {
-    return {
-      type: 'ERROR',
-      payload: { error: err }
-    }
+  let error;
+  if (typeof err === 'string') {
+    error = new Error(err);
   }
 
-  if (typeof err === 'string') {
-    return {
-      type: 'ERROR',
-      payload: {
-        error: new Error(err)
-      }
-    }
-  }
+  let notification = new Notification('ERROR', {
+    body: error.message
+  });
+  return {
+    type: 'ERROR',
+    payload: { error }
+  };
 }

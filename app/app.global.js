@@ -10,8 +10,6 @@ export default StyleSheet.create({
         "position": "relative",
         "color": "white",
         "height": 100 * vh,
-        "backgroundColor": "#232C39",
-        "backgroundImage": "linear-gradient(45deg, rgba(0, 216, 255, .5) 10%, rgba(0, 1, 127, .7))",
         "fontFamily": "Arial, Helvetica, Helvetica Neue, serif",
         "overflowY": "hidden"
     }

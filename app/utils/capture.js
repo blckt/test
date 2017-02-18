@@ -5,39 +5,48 @@ import * as actions from '../actions/screen';
 
 import ExtendedMediaRecorder from './MediaRecorder';
 
-import { writeToFile, StreamWriter } from './fileWriter'
+import { writeToFile, StreamWriter } from './fileWriter';
 
 import './ffmpegWorker';
 
 const filePath = resolve(__dirname, 'result', 'file');
 
 export function startCapturing(stream) {
-
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve,reject)=>{
     let options = { mimeType: 'video/webm;codecs=vp9' };
     let mediaRecorder;
-    let recordedBlobs = [];
-    let blobOptions = { type: 'video/webm' };
-    let streamWriter = new StreamWriter(filePath);
+    const recordedBlobs = [];
+    const blobOptions = { type: 'video/webm' };
+  });
+}
+
+
+/*
+(resolve, reject) => {
+    let options = { mimeType: 'video/webm;codecs=vp9' };
+    let mediaRecorder;
+    const recordedBlobs = [];
+    const blobOptions = { type: 'video/webm' };
+    const streamWriter = new StreamWriter(filePath);
     // const readStream = fs.createReadStream()
     if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-      console.log(options.mimeType + ' is not Supported');
+      console.log(`${options.mimeType} is not Supported`);
       options = { mimeType: 'video/webm;codecs=vp8' };
       if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-        console.log(options.mimeType + ' is not Supported');
+        console.log(`${options.mimeType} is not Supported`);
         options = { mimeType: 'video/webm' };
         if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-          console.log(options.mimeType + ' is not Supported');
+          console.log(`${options.mimeType} is not Supported`);
           options = { mimeType: '' };
         }
       }
     }
 
-    var blobToBase64 = function (blob, cb) {
-      var reader = new FileReader();
+    let blobToBase64 = function (blob, cb) {
+      let reader = new FileReader();
       reader.onload = function () {
-        var dataUrl = reader.result;
-        var base64 = dataUrl.split(',')[1];
+        let dataUrl = reader.result;
+        let base64 = dataUrl.split(',')[1];
         cb(base64);
       };
       reader.readAsDataURL(blob);
@@ -51,9 +60,9 @@ export function startCapturing(stream) {
         //  recordedBlobs.push(event.data);
         // chunksToBuffer(event.data, blobOptions)
         //   .then(buffer => streamWriter.writeData(buffer))
-        //writeToFile(filePath, buffer)
+        // writeToFile(filePath, buffer)
       }
-    }
+    };
 
     // function chunksToBuffer(chunk, options = blobOptions) {
     //   return new Promise((resolve, reject) => {
@@ -61,22 +70,19 @@ export function startCapturing(stream) {
     //     blobToBase64(blob, resolve)
     //   })
     // }
-
-
-    debugger;
     mediaRecorder = new ExtendedMediaRecorder(stream, options, {
       onStop: handleStop,
       onData: handleDataAvailable,
-      onStart: () => { console.log('record started') },
+      onStart: () => { console.log('record started'); },
       onStop: () => {
         console.log(this);
       },
       onError: reject
-    })
+    });
 
-    console.log(mediaRecorder.getReader)
+    console.log(mediaRecorder.getReader);
 
-    resolve(null)
+    resolve(null);
     // try {
     //   mediaRecorder = new MediaRecorder(this.stream, options);
     //   console.log('Created MediaRecorder', mediaRecorder, 'with options', options);
@@ -93,6 +99,4 @@ export function startCapturing(stream) {
     //   reject(e);
     //   return;
     // }
-  })
-
-}
+  }*/

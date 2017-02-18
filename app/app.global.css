@@ -7,9 +7,7 @@ body {
   position: relative;
   color: white;
   height: 100vh;
-  background-color: #232C39;
-  background-image: linear-gradient(rgba(255, 255, 255, .5) 10%, rgba(32, 32, 32, .7));
-  font-family: Arial, Helvetica, Helvetica Neue, serif;
+  font-family: Roboto, Arial, Helvetica, Helvetica Neue, serif;
   overflow-y: hidden;
 }
 

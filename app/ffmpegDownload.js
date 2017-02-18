@@ -1,10 +1,11 @@
+import os from 'os';
 export default function (app) {
   const ffbinaries = require('ffbinaries');
   const path = require('path');
   const fs = require('fs');
   const platform = ffbinaries.detectPlatform();
   const dest = path.resolve(__dirname, 'binaries');
-  import os from 'os';
+
 
 
   fs.readdir(dest, (err, files) => {
