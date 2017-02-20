@@ -47,7 +47,7 @@ export function destroyRecorder() {
 export function startVideoCapture() {
   const {screen: {mediaRecorder}} = store.getState();
   if (mediaRecorder) {
-    mediaRecorder.startCapture();
+    mediaRecorder.startRecording();
     let notification = new Notification('Title', {
       body: 'Started'
     })
@@ -66,7 +66,7 @@ export function startVideoCapture() {
 export function stopVideoCapturing() {
   const {screen: {mediaRecorder}} = store.getState();
   if (mediaRecorder) {
-    mediaRecorder.stopCapture();
+    mediaRecorder.stopRecording();
     return {
       type: VIDEO_CAPTURE_STATE_CHANGE,
       payload: {

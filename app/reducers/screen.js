@@ -27,6 +27,7 @@ export default function screens(state = initialState, action) {
       const {payload: {mediaRecorder}} = action;
       return Object.assign({}, state, { mediaRecorder })
     }
+    
     default:
       return state;
   }

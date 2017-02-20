@@ -1,14 +1,12 @@
 import os from 'os';
+
 export default function (app) {
   const ffbinaries = require('ffbinaries');
   const path = require('path');
   const fs = require('fs');
   const platform = ffbinaries.detectPlatform();
   const dest = path.resolve(__dirname, 'binaries');
-
-
-
-  fs.readdir(dest, (err, files) => {
+fs.readdir(dest, (err, files) => {
     if (!files || (files && files.length === 0)) {
       ffbinaries.downloadFiles(platform, { destination: dest }, function () {
         console.log('Downloaded binaries for ' + platform + '.');

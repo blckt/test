@@ -5,7 +5,7 @@ import styles from './styles.css';
 
 export default class Player extends Component {
   static propTypes = {
-    src: PropTypes.any.isRequired
+    src: PropTypes.any
   }
   state = {
     video: null,
