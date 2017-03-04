@@ -1,4 +1,4 @@
-import { desktopCapturer } from 'electron'
+﻿import { desktopCapturer } from 'electron'
 
 import { push } from 'react-router-redux';
 
@@ -22,10 +22,9 @@ export const ON_VIDEO_DATA = 'ON_VIDEO_DATA'
 export const VIDEO_RECORDER_INSTALLED = 'VIDEO_RECORDER_INSTALLED'
 export const VIDEO_CAPTURE_STATE_CHANGE = 'VIDEO_CAPTURE_STATE_CHANGE'
 
-
-export function installVideoRecorder(stream) {
+export function installVideoRecorder(screenStream, webCamStream) {
   return dispatch => {
-    startCapturing(stream)
+    startCapturing(screenStream, webCamStream)
       .then(mediaRecorder => dispatch({ type: VIDEO_RECORDER_INSTALLED, payload: { mediaRecorder } }))
       .catch(err => {
         alert(err.message)
@@ -47,8 +46,8 @@ export function destroyRecorder() {
 export function startVideoCapture() {
   const {screen: {mediaRecorder}} = store.getState();
   if (mediaRecorder) {
-    mediaRecorder.startCapture();
-    let notification = new Notification('Title', {
+    mediaRecorder.start(3000);
+    new Notification('Title', {
       body: 'Started'
     })
     return {
@@ -66,7 +65,7 @@ export function startVideoCapture() {
 export function stopVideoCapturing() {
   const {screen: {mediaRecorder}} = store.getState();
   if (mediaRecorder) {
-    mediaRecorder.stopCapture();
+    mediaRecorder.stop();
     return {
       type: VIDEO_CAPTURE_STATE_CHANGE,
       payload: {

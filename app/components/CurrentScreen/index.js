@@ -1,21 +1,30 @@
-import React, { Component } from 'react';
+﻿// @flow
+import React, { Component, PropTypes } from 'react';
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 
-import * as actions from '../../actions/screen.js'
 
-import { Card, CardMedia, CardTitle, CardHeader, FlatButton, CardActions } from 'material-ui'
+import { Card, CardMedia, FlatButton, CardActions } from 'material-ui'
 
-import VideoPlayer from './VideoPlayer.jsx';
-import { initPreview } from './utils/stream.js'
+import * as actions from '../../actions/screen'
+
+
+import VideoPlayer from './VideoPlayer';
+import AudioVisualizer from './AudioVisualizer';
+import { initPreview } from './utils/stream'
 
 import styles from './styles.css';
 
 
+const webCamConstraits = {
+  audio: true,
+  video: false
+};
+
 
 const videoCaptureOptions = (id, customWidth, customHeight) => {
-  const {width, height} = screen;
+  const { width, height } = screen;
   return {
     audio: {
       mandatory: {
@@ -51,13 +60,20 @@ function mapDispatchToProps(dispatch) {
 
 
 class AllScreens extends Component {
-  state = {
-    currentScreen: {},
-    stream: null
+  static propTypes = {
+    screens: PropTypes.arrayOf(Object).isRequired,
+    installVideoRecorder: PropTypes.func.isRequired,
+    startVideoCapture: PropTypes.func.isRequired,
+    stopVideoCapturing: PropTypes.func.isRequired
   }
 
+  state = {
+    currentScreen: {},
+    stream: null,
+    webCam: null
+  }
   componentWillMount() {
-    const {screens: {currentScreen}} = this.props;
+    const { screens: { currentScreen } } = this.props;
     this.setState({
       currentScreen
     })
@@ -69,22 +85,36 @@ class AllScreens extends Component {
 
   showPreview = async (id) => {
     let stream;
+    let webCam;
     try {
       stream = await initPreview(videoCaptureOptions(id))
-      this.setState({ stream });
-      this.props.installVideoRecorder(this.state.stream);
-    }
-    catch (e) {
+      webCam = await initPreview(webCamConstraits);
+    } catch (e) {
       console.log(e);
-      alert(e.message)
+      new Notification('Error', {
+        body: e.message
+      });
     }
+    const tracks = webCam.getAudioTracks();
+    stream.addTrack(tracks[0]);
+    console.log(stream)
+    this.props.installVideoRecorder(stream, webCam);
+    this.setState({ stream, webCam });
   }
 
   render() {
     return (
       <Card>
         <CardMedia className={styles['video-container']}>
-          <VideoPlayer src={this.state.stream} />
+          {(() => {
+            console.log('heree');
+            if (this.state.webCam) {
+              return (<div style={{ display: 'flex', flexDirection: 'column' }}>
+                <VideoPlayer src={this.state.stream} />
+                <AudioVisualizer stream={this.state.webCam} />
+              </div>)
+            }
+          })()}
         </CardMedia>
         <CardActions>
           <FlatButton label="Capture" onClick={() => { this.props.startVideoCapture() }} />

@@ -1,22 +1,62 @@
+﻿// @flow
 import * as fs from 'fs';
-import { store } from '../index';
 import { resolve } from 'path';
 import * as actions from '../actions/screen';
 
 import ExtendedMediaRecorder from './MediaRecorder';
 
+import { store } from '../index';
 import { writeToFile, StreamWriter } from './fileWriter';
 
 import './ffmpegWorker';
 
 const filePath = resolve(__dirname, 'result', 'file');
 
-export function startCapturing(stream) {
-  return new Promise((resolve,reject)=>{
+export function startCapturing(videoStream, audioStream) {
+  return new Promise((resolve, reject) => {
     let options = { mimeType: 'video/webm;codecs=vp9' };
-    let mediaRecorder;
+    let recorder;
     const recordedBlobs = [];
-    const blobOptions = { type: 'video/webm' };
+    const download = () => {
+      let blob = new Blob(recordedBlobs, { type: 'video/webm' })
+      let url = URL.createObjectURL(blob)
+      let a = document.createElement('a')
+      document.body.appendChild(a)
+      a.style = 'display: none'
+      a.href = url
+      a.download = 'electron-screen-recorder.webm'
+      a.click()
+      setTimeout(function () {
+        document.body.removeChild(a)
+        window.URL.revokeObjectURL(url)
+      }, 100)
+    }
+    const tracks = audioStream.getAudioTracks();
+    videoStream.addTrack(tracks[0]);
+    const vAudTracks =  videoStream.getAudioTracks();
+    const vVidtracks = videoStream.getVideoTracks();
+    try {
+      recorder = new MediaRecorder(videoStream);
+    } catch (error) {
+      new Notification('Error', { body: error.message })
+    }
+    // const blobOptions = { type: 'video/webm' };
+    debugger;
+    recorder.onstop = function () {
+      console.log(recordedBlobs)
+      download();
+    }
+    recorder.ondataavailable = function (blob) {
+      console.log(blob);
+      recordedBlobs.push(blob.data);
+    }
+    recorder.start(2000);
+    setTimeout(() => {
+      recorder.stop()
+    }, 10000)
+
+    resolve(recorder);
+
   });
 }
 
