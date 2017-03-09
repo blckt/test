@@ -24,12 +24,21 @@ export default class AudioVisualizer extends React.Component {
     dataArray: null
   }
   componentWillMount() {
-    const audioCtx = new AudioContext();
-    const source = audioCtx.createMediaStreamSource(this.props.stream);
-    const analyzer = audioCtx.createAnalyser();
-    source.connect(analyzer);
-    this.setState({ source, analyzer });
-    console.log(audioCtx)
+    if (this.props.stream.getAudioTracks()[0]) {
+      const audioCtx = new AudioContext();
+      const source = audioCtx.createMediaStreamSource(this.props.stream);
+      const analyzer = audioCtx.createAnalyser();
+      source.connect(analyzer);
+
+      var biquadFilter = audioCtx.createBiquadFilter();
+      biquadFilter.type = "lowshelf";
+      biquadFilter.frequency.value = 1000;
+      biquadFilter.gain.value = 55;
+      analyzer.connect(biquadFilter);
+      //x
+      //biquadFilter.connect(audioCtx.destination);
+      this.setState({ source, analyzer });
+    }
   }
   componentDidMount() {
     console.log(this);

@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Menu, shell } from 'electron';
 
-import './ffmpegDownload';
+import ffmpeg from './ffmpegDownload';
 
 let menu;
 let template;
@@ -54,6 +54,7 @@ const installExtensions = async () => {
   }
 };
 
+ffmpeg(app);
 app.on('ready', async () => {
   await installExtensions();
   splashWindow = new BrowserWindow({

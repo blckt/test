@@ -1,5 +1,5 @@
 const fs = require('fs');
-const {app} = require('electron').remote;
+const { app } = require('electron').remote;
 
 console.log(app.getAppPath())
 export function writeToFile(path, buff) {
@@ -30,7 +30,7 @@ export function writeToStream(buff) {
 export class StreamWriter {
   constructor(path) {
     this.buffer = new Buffer([])
-    this.writeStream = fs.createWriteStream(path,{
+    this.writeStream = fs.createWriteStream(path, {
 
     });
     this.readStream = fs.createReadStream(this.buffer);

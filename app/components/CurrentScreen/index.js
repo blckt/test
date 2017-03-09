@@ -88,16 +88,28 @@ class AllScreens extends Component {
     let webCam;
     try {
       stream = await initPreview(videoCaptureOptions(id))
-      webCam = await initPreview(webCamConstraits);
     } catch (e) {
       console.log(e);
       new Notification('Error', {
         body: e.message
       });
     }
-    const tracks = webCam.getAudioTracks();
-    stream.addTrack(tracks[0]);
-    console.log(stream)
+
+    try {
+      webCam = await initPreview(webCamConstraits);
+    }
+    catch (ex) {
+      new Notification('Error', {
+        body: ex.message
+      });
+    }
+    if (webCam) {
+      const tracks = webCam.getAudioTracks();
+      if (tracks[0]) {
+        stream.addTrack(tracks[0]);
+      }
+    }
+
     this.props.installVideoRecorder(stream, webCam);
     this.setState({ stream, webCam });
   }
@@ -107,11 +119,15 @@ class AllScreens extends Component {
       <Card>
         <CardMedia className={styles['video-container']}>
           {(() => {
-            console.log('heree');
-            if (this.state.webCam) {
+            if (this.state.stream) {
               return (<div style={{ display: 'flex', flexDirection: 'column' }}>
                 <VideoPlayer src={this.state.stream} />
-                <AudioVisualizer stream={this.state.webCam} />
+                <AudioVisualizer stream={this.state.stream} />
+                {(() => {
+                  if (this.state.webCam && this.state.webCam.getAudioTracks()[0]) {
+                    <AudioVisualizer stream={this.state.stream} />
+                  }
+                })()}
               </div>)
             }
           })()}

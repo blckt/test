@@ -33,7 +33,6 @@ class AllScreens extends Component {
   }
   componentWillReceiveProps(){
     const {allScreens} = this.props.screens;
-
     this.setState({screens:allScreens})
   }
   willLeave(){

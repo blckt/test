@@ -27,7 +27,6 @@ class BottomNavigationExampleSimple extends Component {
   };
 
   componentWillMount() {
-
     const {router,nav} = this.props
 
  this.updateActive(nav)
