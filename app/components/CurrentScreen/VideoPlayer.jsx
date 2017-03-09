@@ -2,24 +2,22 @@ import React, { Component, PropTypes } from 'react'
 
 import styles from './styles.css';
 
+let x = 0;
 
 export default class Player extends Component {
   static propTypes = {
-    src: PropTypes.any
+    src: PropTypes.instanceOf(Object).isRequired,
   }
   state = {
     video: null,
-    src: ''
-  }
-  componentWillReceiveProps(props) {
-    const {src} = props;
-    this.addVideoSrc(src);
+    src: '',
+    videoStream: null
   }
   componentDidMount() {
-
+    this.addVideoSrc(this.props.src);
   }
   setRef = (src) => {
-    const {video} = this.refs;
+    const video = this.video;
     if (video) {
       video.muted = true;
       this.setState({
@@ -39,9 +37,8 @@ export default class Player extends Component {
   }
 
   render() {
-
     if (this.state.src) {
-      return <video className={styles['video-box']} src={this.state.src} autoPlay ref="video" muted></video>
+      return <video className={styles['video-box']} src={this.state.src} autoPlay ref={(_c) => { this.video = _c }} muted></video>
     } else {
       return <div>Loading...</div>
     }
